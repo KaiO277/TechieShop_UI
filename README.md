@@ -1,12 +1,50 @@
-# React + Vite
+# 🌟 TechieShop API
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**TechieShop UI** là dự án frontend của nền tảng TechieShop – một hệ thống hỗ trợ cộng đồng trong việc mua bán thiết bị điện tử. Giao diện được xây dựng bằng **React** kết hợp **Vite** nhằm đảm bảo hiệu suất cao, trải nghiệm mượt mà và dễ dàng mở rộng.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Tính năng chính
 
-## Expanding the ESLint configuration
+- 🛒 Giao diện bán hàng hiện đại, tối ưu cho trải nghiệm người dùng
+- 🔍 Tìm kiếm, lọc và xem chi tiết sản phẩm
+- 🧾 Quản lý giỏ hàng và thanh toán đơn giản
+- 🌐 Tích hợp API backend linh hoạt
+- 📱 Responsive – hiển thị tốt trên nhiều thiết bị
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## ⚙️ Cài đặt & Chạy dự án
+
+### 1. Clone hoặc tải mã nguồn
+
+```bash
+git clone https://github.com/KaiO277/TechieShop_UI.git
+cd TechieShop_UI
+```
+
+2. Cài đặt dependencies
+
+```
+npm install
+```
+
+3. Chạy ứng dụng trong môi trường phát triển
+
+```
+npm run dev
+```
+
+Ứng dụng sẽ khởi chạy tại http://localhost:5173 (hoặc port do Vite tự chọn nếu 5173 đã bị chiếm).
+
+## 🛠 Công nghệ sử dụng
+
+## ⚛️ React
+
+# ⚡ Vite
+
+# 🖌️ Tailwind CSS (nếu có sử dụng)
+
+# 📦 Axios (hoặc thư viện gọi API khác)
+
+# 🔧 ESLint + Prettier (tuỳ chọn, nếu có cấu hình)
