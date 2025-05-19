@@ -7,10 +7,10 @@ const HeroSection = () => {
         <div className="flex flex-col md:flex-row items-center">
           <div className="md:w-1/2 mb-8 md:mb-0">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Summer Collection 2025
+              Summer Tech Collection 2025
             </h1>
             <p className="text-xl mb-6">
-              Discover the latest trends in fashion with our exclusive collection
+              Explore the latest innovations in smartphones, tablets, and gadgets with our exclusive new arrivals.
             </p>
             <button className="bg-white text-indigo-600 font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition duration-300">
               Shop Now
