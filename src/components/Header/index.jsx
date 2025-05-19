@@ -1,8 +1,13 @@
 import React from 'react';
+import { useCart} from '/src/pages/Cart/CartContext.jsx';
+
 
 const Header = () => {
+  const { cartItems } = useCart();
+  const totalQuantity = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+
   return (
-    <nav className="bg-white shadow-md">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
       <div className="container mx-auto px-4 py-3">
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-4">
@@ -21,15 +26,17 @@ const Header = () => {
             <button className="p-2 text-gray-700 hover:text-indigo-600">
               <i className="fas fa-search"></i>
             </button>
-            <button className="p-2 text-gray-700 hover:text-indigo-600">
+            {/* <button className="p-2 text-gray-700 hover:text-indigo-600">
               <i className="fas fa-user"></i>
-            </button>
-            <a href="/cart" className="p-2 text-gray-700 hover:text-indigo-600 relative">
-              <i className="fas fa-shopping-cart"></i>
-              <span className="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                3
-              </span>
-            </a>
+            </button> */}
+              <a href="/cart" className="p-2 text-gray-700 hover:text-indigo-600 relative">
+                <i className="fas fa-shopping-cart"></i>
+                {totalQuantity > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    {totalQuantity}
+                  </span>
+                )}
+              </a>
             <button className="md:hidden p-2 text-gray-700">
               <i className="fas fa-bars"></i>
             </button>
