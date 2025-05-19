@@ -8,7 +8,7 @@ const Footer = () => {
           <div>
             <h3 className="text-xl font-bold mb-4 flex items-center">
               <i className="fas fa-shopping-bag mr-2"></i>
-              ShopEase
+              TechieShop
             </h3>
             <p className="text-gray-400 mb-4">
               Your one-stop shop for all your needs. Quality products at affordable prices.
@@ -48,15 +48,15 @@ const Footer = () => {
             <ul className="space-y-2 text-gray-400">
               <li className="flex items-center">
                 <i className="fas fa-map-marker-alt mr-2"></i>
-                123 Commerce St, City, Country
+                DaNang, VN
               </li>
               <li className="flex items-center">
                 <i className="fas fa-phone-alt mr-2"></i>
-                +1 (555) 123-4567
+                0123456789
               </li>
               <li className="flex items-center">
                 <i className="fas fa-envelope mr-2"></i>
-                <a href="mailto:info@shopease.com">info@shopease.com</a>
+                <a href="mailto:info@shopease.com">info@techieshop.com</a>
               </li>
             </ul>
           </div>
@@ -64,7 +64,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-800 pt-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 mb-4 md:mb-0">© 2025 ShopEase. All rights reserved.</p>
+            <p className="text-gray-400 mb-4 md:mb-0">© 2025 KaiO. All rights reserved.</p>
             <div className="flex space-x-4">
               <img src="https://images.unsplash.com/photo-1615915468538-0fbd857888ca?crop=entropy&cs=srgb&fm=jpg&q=85" alt="Visa logo" className="h-6" loading="lazy" />
               <img src="https://images.unsplash.com/photo-1620288627223-53302f4e8c74?crop=entropy&cs=srgb&fm=jpg&q=85" alt="Mastercard logo" className="h-6" loading="lazy" />

@@ -8,7 +8,7 @@ const Header = () => {
           <div className="flex items-center space-x-4">
             <a href="/" className="text-2xl font-bold text-indigo-600 flex items-center">
               <i className="fas fa-shopping-bag mr-2"></i>
-              ShopEase
+              TechieShop
             </a>
             <div className="hidden md:flex space-x-6">
               <a href="/" className="text-gray-700 hover:text-indigo-600">Home</a>
