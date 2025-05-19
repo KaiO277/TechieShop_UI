@@ -41,10 +41,12 @@ npm run dev
 
 ## ⚛️ React
 
-# ⚡ Vite
+⚛️ React
 
-# 🖌️ Tailwind CSS (nếu có sử dụng)
+⚡ Vite
 
-# 📦 Axios (hoặc thư viện gọi API khác)
+🖌️ Tailwind CSS (nếu có sử dụng)
 
-# 🔧 ESLint + Prettier (tuỳ chọn, nếu có cấu hình)
+📦 Axios (hoặc thư viện gọi API khác)
+
+🔧 ESLint + Prettier (tuỳ chọn, nếu có cấu hình)
