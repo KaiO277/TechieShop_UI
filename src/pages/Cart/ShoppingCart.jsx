@@ -19,7 +19,7 @@ const ShoppingCart = () => {
 
   return (
     <div className="bg-gray-100 min-h-screen">
-      <div className="container mx-auto py-8 px-4">
+      <div className="container mx-auto py-8 px-4 pt-16">
         <div className="max-w-6xl mx-auto">
           <h1 className="text-3xl font-bold text-gray-800 mb-8">
             Your Shopping Cart
@@ -63,21 +63,26 @@ const ShoppingCart = () => {
                       </span>
                     </div>
                     <div className="col-span-2">
-                      <div className="flex items-center border rounded">
+                      <div className="flex border rounded w-[9rem] h-10 overflow-hidden">
                         <button
-                          className="px-3 py-1 text-gray-600"
+                          className="w-1/3 flex items-center justify-center text-gray-600 hover:bg-gray-100"
                           onClick={() => handleQuantityChange(item.id, "dec")}
                         >
-                          <i className="fas fa-minus"></i>
+                          <i className="fas fa-minus text-base leading-none"></i>
                         </button>
-                        <span className="px-3 py-1 border-x">{item.quantity}</span>
+
+                        <span className="w-1/3 border-l border-r flex items-center justify-center text-gray-800 font-medium">
+                          {item.quantity}
+                        </span>
+
                         <button
-                          className="px-3 py-1 text-gray-600"
+                          className="w-1/3 flex items-center justify-center text-gray-600 hover:bg-gray-100"
                           onClick={() => handleQuantityChange(item.id, "inc")}
                         >
-                          <i className="fas fa-plus"></i>
+                          <i className="fas fa-plus text-base leading-none"></i>
                         </button>
                       </div>
+
                     </div>
                     <div className="col-span-2">
                       <span className="font-medium text-gray-800">
