@@ -4,8 +4,9 @@ import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL;
 const renderStars = (rating) => {
-  const fullStars = Math.floor(rating);
-  const half = rating % 1 >= 0.5;
+  const safeRating = Number.isFinite(rating) ? rating : 0;
+  const fullStars = Math.floor(safeRating);
+  const half = safeRating % 1 >= 0.5;
   return (
     <>
       {[...Array(fullStars)].map((_, i) => (
@@ -26,7 +27,7 @@ const FeaturedProducts = () => {
     axios
       .get(`${API_URL}/api/products/top_expensive_products/`)
       .then((res) => {
-        setProducts(Array.isArray(res.data.data));
+        setProducts(Array.isArray(res.data.data) ? res.data.data : res.data.products || []);
       })
       .catch((err) => {
         console.error("Failed to fetch featured products", err);
