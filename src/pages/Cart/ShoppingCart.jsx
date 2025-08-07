@@ -1,6 +1,7 @@
 import React from "react";
 import { useCart } from "./CartContext";
 
+const API_URL = import.meta.env.VITE_API_URL;
 const ShoppingCart = () => {
   const { cartItems, removeFromCart, updateQuantity } = useCart();
 
@@ -45,7 +46,7 @@ const ShoppingCart = () => {
                   >
                     <div className="col-span-5 flex items-center">
                       <img
-                        src={`http://localhost:8000${item.image}`}
+                        src={`${API_URL}${item.image}`}
                         alt={item.name}
                         className="w-20 h-20 object-cover rounded mr-4"
                         loading="lazy"
