@@ -3,8 +3,9 @@ import axios from 'axios';
 import { useCart } from '../Cart/CartContext.jsx';
 
 const renderStars = (rating) => {
-  const fullStars = Math.floor(rating);
-  const halfStar = rating % 1 >= 0.5;
+  const safeRating = Number.isFinite(rating) ? rating : 0;
+  const fullStars = Math.floor(safeRating);
+  const halfStar = safeRating % 1 >= 0.5;
   const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
   return (
     <>
@@ -19,21 +20,27 @@ const renderStars = (rating) => {
   );
 };
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const FeaturedProducts = () => {
   const [products, setProducts] = useState([]);
   const { addToCart } = useCart();
 
   useEffect(() => {
     axios
-      .get('http://localhost:8000/api/products/products_get_all_api/')
-      .then((res) => setProducts(res.data))
+      .get(`${API_URL}/api/products/`)
+      .then((res) => {
+        setProducts(Array.isArray(res.data.data) ? res.data.data : []);
+      })
       .catch((err) => console.error('Error fetching products:', err));
   }, []);
 
   return (
     <div className="w-full md:w-3/4 mx-auto p-4">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
-        <h2 className="text-2xl font-bold text-dark mb-4 md:mb-0">Featured Products</h2>
+        <h2 className="text-2xl font-bold text-dark mb-4 md:mb-0">
+          Featured Products
+        </h2>
         <div className="flex items-center space-x-4">
           <div className="flex items-center">
             <span className="text-gray-600 mr-2">Sort by:</span>
@@ -55,7 +62,7 @@ const FeaturedProducts = () => {
           >
             <div className="relative">
               <img
-                src={`http://localhost:8000${product.image}`}
+                src={`${API_URL}${product.image}`}
                 alt={product.name}
                 className="w-full h-64 object-contain"
               />
@@ -63,7 +70,7 @@ const FeaturedProducts = () => {
             <div className="p-4">
               <h3 className="font-semibold text-lg mb-1">{product.name}</h3>
               <div className="flex items-center mb-2">
-                {renderStars(parseFloat(product.rate))}
+                {renderStars(Number(product.rate))}
                 <span className="text-gray-600 text-sm ml-2">
                   ({product.review})
                 </span>
