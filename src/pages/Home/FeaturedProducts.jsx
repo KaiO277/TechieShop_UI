@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL;
 const renderStars = (rating) => {
   const fullStars = Math.floor(rating);
   const half = rating % 1 >= 0.5;
@@ -23,7 +24,7 @@ const FeaturedProducts = () => {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/products/top_expensive_products/")
+      .get(`${API_URL}/api/categories/top_expensive_products/`)
       .then((res) => {
         setProducts(res.data);
       })
@@ -44,7 +45,7 @@ const FeaturedProducts = () => {
             >
               <div className="relative">
                 <img
-                  src={`http://127.0.0.1:8000${product.image}`}
+                  src={`${API_URL}${product.image}`}
                   alt={product.name}
                   className="w-full h-64 object-cover"
                   loading="lazy"
