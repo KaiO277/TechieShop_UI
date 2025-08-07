@@ -24,14 +24,15 @@ const FeaturedProducts = () => {
 
   useEffect(() => {
     axios
-      .get(`${API_URL}/api/categories/top_expensive_products/`)
+      .get(`${API_URL}/api/products/top_expensive_products/`)
       .then((res) => {
-        setProducts(res.data);
+        setProducts(Array.isArray(res.data.data));
       })
       .catch((err) => {
         console.error("Failed to fetch featured products", err);
       });
   }, []);
+  console.log("Products:", products);
 
   return (
     <section className="py-12 bg-gray-50">
