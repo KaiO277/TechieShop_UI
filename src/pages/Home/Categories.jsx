@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+const API_URL = import.meta.env.VITE_API_URL;
 const CategorySection = () => {
   const [categories, setCategories] = useState([]);
 
-  useEffect(() => {
-    axios
-      .get('http://127.0.0.1:8000/api/categories/categories_get_all_api/')
-      .then((res) => {
-        setCategories(res.data);
-      })
-      .catch((err) => {
-        console.error('Error fetching categories:', err);
-      });
-  }, []);
-
-  const BASE_URL = 'http://127.0.0.1:8000'; // Prefix cho ảnh nếu path là /media/...
+useEffect(() => {
+  axios
+    .get(`${API_URL}/api/categories/categories_get_all_api/`)
+    .then((res) => {
+      setCategories(Array.isArray(res.data.data) ? res.data.data : res.data.categories || []);
+    })
+    .catch((err) => {
+      console.error('Error fetching categories:', err);
+    });
+}, []);
+  
+  console.log('API_URL:', API_URL);
+  
+  const BASE_URL = 'http://localhost:5000'; 
 
   return (
     <section className="py-12 bg-white">
@@ -29,7 +32,7 @@ const CategorySection = () => {
             >
               <a href="#" className="block">
                 <img
-                  src={`${BASE_URL}${category.image}`}
+                  src={`${API_URL}${category.image_url}`}
                   alt={category.name}
                   className="w-full h-48 object-cover"
                 />
