@@ -4,6 +4,8 @@ import axios from 'axios';
 export default function Filters() {
   const [maxPrice, setMaxPrice] = useState(0);
   const [selectedPrice, setSelectedPrice] = useState(0);
+  const [categories, setCategories] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState({});
   const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
@@ -16,24 +18,36 @@ export default function Filters() {
       })
       .catch((err) => console.error('Error fetching products:', err));
   }, []);
-  console.log('Highest Price:', maxPrice);
 
-  const [categories, setCategories] = useState({
-    smartWatches: false,
-    fitnessTrackers: true,
-    smartBands: false,
-    accessories: false,
-  });
+  useEffect(() => {
+    axios
+      .get(`${API_URL}/api/categories/categories_get_all_api`)
+      .then((res) => {
+        const categoriesData = Array.isArray(res.data.data) ? res.data.data : [];
+        setCategories(categoriesData);
 
-  const [brands, setBrands] = useState({
-    apple: false,
-    samsung: true,
-    fitbit: false,
-    garmin: false,
-  });
+        // Initialize selected categories state
+        const initialSelected = {};
+        categoriesData.forEach(category => {
+          initialSelected[category.id] = false;
+        });
+        setSelectedCategories(initialSelected);
+      })
+      .catch((err) => console.error('Error fetching categories:', err));
+  }, []);
 
-  const handleCategoryChange = (name) => {
-    setCategories((prev) => ({ ...prev, [name]: !prev[name] }));
+  console.log('Categories:', categories);
+  console.log('Selected Categories:', selectedCategories);
+
+  // const [brands, setBrands] = useState({
+  //   apple: false,
+  //   samsung: true,
+  //   fitbit: false,
+  //   garmin: false,
+  // });
+
+  const handleCategoryChange = (categoryId) => {
+    setSelectedCategories((prev) => ({ ...prev, [categoryId]: !prev[categoryId] }));
   };
 
   const handleBrandChange = (name) => {
@@ -72,21 +86,16 @@ export default function Filters() {
         <div className="mb-6">
           <h4 className="font-medium mb-3">Categories</h4>
           <ul className="space-y-2">
-            {[
-              { key: 'smartWatches', label: 'Smart Watches' },
-              { key: 'fitnessTrackers', label: 'Fitness Trackers' },
-              { key: 'smartBands', label: 'Smart Bands' },
-              { key: 'accessories', label: 'Accessories' },
-            ].map(({ key, label }) => (
-              <li key={key}>
+            {categories.map((category) => (
+              <li key={category.id}>
                 <label className="flex items-center">
                   <input
                     type="checkbox"
-                    checked={categories[key]}
-                    onChange={() => handleCategoryChange(key)}
+                    checked={selectedCategories[category.id] || false}
+                    onChange={() => handleCategoryChange(category.id)}
                     className="form-checkbox text-primary rounded focus:ring-primary"
                   />
-                  <span className="ml-2 text-gray-600">{label}</span>
+                  <span className="ml-2 text-gray-600">{category.name}</span>
                 </label>
               </li>
             ))}
@@ -94,7 +103,7 @@ export default function Filters() {
         </div>
 
         {/* Brands */}
-        <div className="mb-6">
+        {/* <div className="mb-6">
           <h4 className="font-medium mb-3">Brands</h4>
           <ul className="space-y-2">
             {[
@@ -116,13 +125,13 @@ export default function Filters() {
               </li>
             ))}
           </ul>
-        </div>
+        </div> */}
 
         <button
           className="w-full bg-primary text-white py-2 rounded-lg hover:bg-blue-700 transition"
           onClick={() => {
             // You can handle applying the filters here
-            console.log({ price, categories, brands });
+            console.log({ selectedPrice, selectedCategories, brands });
           }}
         >
           Apply Filters
