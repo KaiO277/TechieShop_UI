@@ -1,7 +1,23 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 export default function Filters() {
-  const [price, setPrice] = useState(250);
+  const [maxPrice, setMaxPrice] = useState(0);
+  const [selectedPrice, setSelectedPrice] = useState(0);
+  const API_URL = import.meta.env.VITE_API_URL;
+
+  useEffect(() => {
+    axios
+      .get(`${API_URL}/api/products/highest_price`)
+      .then((res) => {
+        const price = Number(res.data.data && res.data.data.highest_price ? res.data.data.highest_price : 0);
+        setMaxPrice(price);
+        setSelectedPrice(price);
+      })
+      .catch((err) => console.error('Error fetching products:', err));
+  }, []);
+  console.log('Highest Price:', maxPrice);
+
   const [categories, setCategories] = useState({
     smartWatches: false,
     fitnessTrackers: true,
@@ -33,19 +49,22 @@ export default function Filters() {
         <div className="mb-6">
           <h4 className="font-medium mb-3">Price Range</h4>
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm">$0</span>
-            <span className="text-sm">$500</span>
+            <span className="text-sm">₫0</span>
+            <span className="text-sm">₫{selectedPrice.toLocaleString()}</span>
           </div>
           <input
             type="range"
             min="0"
-            max="500"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
+            max={maxPrice}
+            value={selectedPrice}
+            onChange={(e) => setSelectedPrice(Number(e.target.value))}
             className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+            disabled={maxPrice === 0}
           />
           <div className="flex justify-between mt-2">
-            <span className="text-sm font-medium">${`0 - ${price}`}</span>
+            <span className="text-sm font-medium">
+              ₫0 - ₫{selectedPrice.toLocaleString()}
+            </span>
           </div>
         </div>
 
