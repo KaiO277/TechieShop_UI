@@ -36,8 +36,8 @@ export default function Filters() {
       .catch((err) => console.error('Error fetching categories:', err));
   }, []);
 
-  console.log('Categories:', categories);
-  console.log('Selected Categories:', selectedCategories);
+  // console.log('Categories:', categories);
+  // console.log('Selected Categories:', selectedCategories);
 
   // const [brands, setBrands] = useState({
   //   apple: false,
