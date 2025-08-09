@@ -20,20 +20,22 @@ const renderStars = (rating) => {
   );
 };
 
-const API_URL = import.meta.env.VITE_API_URL;
-
-const FeaturedProducts = () => {
+const FeaturedProducts = ({ filters }) => {
   const [products, setProducts] = useState([]);
   const { addToCart } = useCart();
+  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    axios
-      .get(`${API_URL}/api/products/`)
-      .then((res) => {
-        setProducts(Array.isArray(res.data.data) ? res.data.data : []);
-      })
-      .catch((err) => console.error('Error fetching products:', err));
-  }, []);
+    if (!filters) {
+      axios.get(`${API_URL}/api/products/`)
+        .then(res => setProducts(Array.isArray(res.data.data) ? res.data.data : []))
+        .catch(err => console.error('Error fetching products:', err));
+    } else {
+      axios.post(`${API_URL}/api/products/filter`, filters)
+        .then(res => setProducts(Array.isArray(res.data.data) ? res.data.data : []))
+        .catch(err => console.error('Error filtering products:', err));
+    }
+  }, [filters]);
 
   return (
     <div className="w-full md:w-3/4 mx-auto p-4">
