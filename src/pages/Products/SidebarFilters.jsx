@@ -46,61 +46,94 @@ export default function Filters() {
   //   garmin: false,
   // });
 
-  const handleCategoryChange = (categoryId) => {
-    setSelectedCategories((prev) => ({ ...prev, [categoryId]: !prev[categoryId] }));
+  // Xử lý chọn category
+  const handleCategoryChange = (id) => {
+    setSelectedCategories((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
   };
 
-  const handleBrandChange = (name) => {
-    setBrands((prev) => ({ ...prev, [name]: !prev[name] }));
+  const applyFilters = () => {
+    const selected = Object.entries(selectedCategories)
+      .filter(([_, checked]) => checked)
+      .map(([id]) => Number(id));
+
+    const filters = {
+      maxPrice: selectedPrice, // đổi max_price → maxPrice
+      categoryId: selected.length > 0 ? selected : null, // đổi categories → categoryId
+    };
+
+    axios
+      .post(`${API_URL}/api/products/filter`, filters)
+      .then((res) => {
+        console.log('Filtered products:', res.data.data || []);
+      })
+      .catch((err) => console.error('Error filtering products:', err));
   };
+
+  console.log('Selected Price:', selectedPrice);
+console.log('Selected Categories:', selectedCategories);
+
 
   return (
     <div className="w-full md:w-1/4">
       <div className="bg-white p-6 rounded-lg shadow-md sticky top-24">
         <h3 className="text-lg font-semibold mb-4">Filters</h3>
 
-        {/* Price Range */}
-        <div className="mb-6">
-          <h4 className="font-medium mb-3">Price Range</h4>
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm">₫0</span>
-            <span className="text-sm">₫{selectedPrice.toLocaleString()}</span>
-          </div>
-          <input
-            type="range"
-            min="0"
-            max={maxPrice}
-            value={selectedPrice}
-            onChange={(e) => setSelectedPrice(Number(e.target.value))}
-            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-            disabled={maxPrice === 0}
-          />
-          <div className="flex justify-between mt-2">
-            <span className="text-sm font-medium">
-              ₫0 - ₫{selectedPrice.toLocaleString()}
-            </span>
-          </div>
+      {/* Price Range */}
+      <div className="mb-6">
+        <h4 className="font-medium mb-3">Price Range</h4>
+        <div className="flex justify-between text-sm mb-2">
+          <span>₫0</span>
+          <span>₫{selectedPrice.toLocaleString()}</span>
         </div>
+        <input
+          type="range"
+          min="0"
+          max={maxPrice}
+          value={selectedPrice}
+          onChange={(e) => setSelectedPrice(Number(e.target.value))}
+          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+          disabled={maxPrice === 0}
+        />
+        <div className="mt-2 text-sm">
+          ₫0 - ₫{selectedPrice.toLocaleString()}
+        </div>
+      </div>
+      {/* Categories */}
+      <div className="mb-6">
+        <h4 className="font-medium mb-3">Categories</h4>
+        <ul className="space-y-2">
+          {categories.map(({ id, name }) => (
+            <li key={id}>
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={selectedCategories[id] || false}
+                  onChange={() => handleCategoryChange(id)}
+                  className="form-checkbox text-primary rounded focus:ring-primary"
+                />
+                <span className="ml-2 text-gray-600">{name}</span>
+              </label>
+            </li>
+          ))}
+        </ul>
+      </div>
 
-        {/* Categories */}
-        <div className="mb-6">
-          <h4 className="font-medium mb-3">Categories</h4>
-          <ul className="space-y-2">
-            {categories.map((category) => (
-              <li key={category.id}>
-                <label className="flex items-center">
-                  <input
-                    type="checkbox"
-                    checked={selectedCategories[category.id] || false}
-                    onChange={() => handleCategoryChange(category.id)}
-                    className="form-checkbox text-primary rounded focus:ring-primary"
-                  />
-                  <span className="ml-2 text-gray-600">{category.name}</span>
-                </label>
-              </li>
-            ))}
-          </ul>
-        </div>
+
+
+      {/* Apply Button */}
+      <button
+        className="w-full bg-primary text-white py-2 rounded-lg hover:bg-blue-700 transition"
+        onClick={applyFilters}
+      >
+        Apply Filters
+      </button>
+      </div>
+    </div>
+  );
+}
 
         {/* Brands */}
         {/* <div className="mb-6">
@@ -126,17 +159,3 @@ export default function Filters() {
             ))}
           </ul>
         </div> */}
-
-        <button
-          className="w-full bg-primary text-white py-2 rounded-lg hover:bg-blue-700 transition"
-          onClick={() => {
-            // You can handle applying the filters here
-            console.log({ selectedPrice, selectedCategories, brands });
-          }}
-        >
-          Apply Filters
-        </button>
-      </div>
-    </div>
-  );
-}
