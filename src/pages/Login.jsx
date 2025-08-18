@@ -1,11 +1,13 @@
 // src/pages/Login.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const navigate = useNavigate(); // Initialize useNavigate
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -19,9 +21,13 @@ const Login = () => {
 
             const { token } = response.data;
             console.log('Login successful, token:', token);
-            // Here you can store the token in localStorage or context
-            localStorage.setItem('token', token); // Example of storing the token
-            // Redirect or update UI as needed
+
+            // Store username and token in localStorage
+            localStorage.setItem('username', username);
+            localStorage.setItem('token', token);
+
+            // Redirect to home page
+            navigate('/'); // Redirect to home page
         } catch (err) {
             console.error('Login failed:', err);
             setError('Invalid username or password'); // Set error message
